@@ -14,7 +14,7 @@ NOTE:: <br> adds new line in browser. But using php as programming language we n
 // Method 1:
 echo "Hello World!<br>";  
 echo("Hello, World 2<br>"); // Doesn't return anything
-// Faster | Multiple arguments can be passed seperated by ,
+// Faster | Multiple arguments can be passed seperated by .
 
 // Method 2:
 print("Hello This is an example of print statement in php\n<br>"); 

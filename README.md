@@ -16,7 +16,10 @@ This repository contains notes, examples, and resources for learning and working
 
 ## Getting Started
 
-1. Clone the repository
+1. Clone the repository:
+```bash
+git clone https://github.com/Nil369/akash-php-notes.git
+```
 2. Set up a local server using XAMPP or any preferred environment.
 3. Access the files in your browser to explore the examples.
 
