@@ -1,0 +1,31 @@
+# Enable URL rewriting
+RewriteEngine On
+
+# Set base directory
+RewriteBase /akash-php-notes/projects/1_iNotes/
+
+# Handle 404 errors - redirect to custom 404 page
+ErrorDocument 404 /akash-php-notes/projects/1_iNotes/404.php
+
+# Secure sensitive files
+<FilesMatch "^\.ht|^_db/|auth\.sql|db\.sql|reset_table\.sql">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Protect .htaccess file
+<Files .htaccess>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Fix db_connect.php issue - ensure correct path
+<IfModule mod_rewrite.c>
+    # If the requested file doesn't exist as a file or directory
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # And it ends with .php
+    RewriteCond %{REQUEST_URI} \.php$
+    # Redirect to index.php
+    RewriteRule ^(.*)$ index.php [L]
+</IfModule> 
