@@ -1,20 +1,21 @@
 <?php
 
-function Button(
-    $color = "primary",
-    $text = "Button",
-    $variant = "", 
-    $size = "md", 
-    $additionalClasses = ""
-) {
-    $variantClass = ($variant === "outline") ? "btn-outline-$color" : "btn-$color";
-    $sizeClass = ($size === "lg" || $size === "sm") ? "btn-$size" : "";
+function Button($type, $text, $url = "", $size = "md") {
+    // Generate button based on type
+    $btnClass = "btn btn-$type btn-$size";
     
-    return '<button type="button" class="btn ' . $variantClass . ' ' . $sizeClass . ' ' . $additionalClasses . ' m-2">
-            ' . $text . '
-          </button>';
+    // If button is for login/signup, add data attributes for modal
+    if ($text == "Login") {
+        return '<button type="button" class="' . $btnClass . ' me-2" data-bs-toggle="modal" data-bs-target="#loginModal">' . $text . '</button>';
+    } else if ($text == "Signup") {
+        return '<button type="button" class="' . $btnClass . '" data-bs-toggle="modal" data-bs-target="#signupModal">' . $text . '</button>';
+    } else if (!empty($url)) {
+        // Regular URL button
+        return '<a href="' . $url . '" class="' . $btnClass . '">' . $text . '</a>';
+    } else {
+        // Regular button
+        return '<button type="button" class="' . $btnClass . '">' . $text . '</button>';
+    }
 }
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 ?>

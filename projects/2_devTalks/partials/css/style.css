@@ -1,0 +1,245 @@
+:root {
+    --bs-primary-rgb: 13, 110, 253;
+    --bs-secondary-rgb: 108, 117, 125;
+    --bs-success-rgb: 25, 135, 84;
+    --bs-info-rgb: 13, 202, 240;
+    --bs-warning-rgb: 255, 193, 7;
+    --bs-danger-rgb: 220, 53, 69;
+}
+
+/* Light Mode (default) */
+.light-mode {
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --card-bg: #ffffff;
+    --border-color: #dee2e6;
+    --code-bg: #f5f5f5;
+    --muted-text-color: #6c757d;
+    --card-header-bg: #f1f1f1;
+    --input-bg: #ffffff;
+    --input-text: #212529;
+}
+
+/* Dark Mode */
+.dark-mode {
+    --bg-color: #121212;
+    --text-color: #f8f9fa;
+    --card-bg: #1e1e1e;
+    --border-color: #2c2c2c;
+    --code-bg: #2d3238;
+    --muted-text-color: #adb5bd;
+    --card-header-bg: #252525;
+    --input-bg: #333333;
+    --input-text: #f8f9fa;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Override bootstrap navbar in dark mode */
+.dark-mode .bg-dark {
+    background-color: #0c0c0c !important;
+}
+
+.dark-mode .navbar-dark {
+    background-color: #0c0c0c !important;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+.card-header {
+    background-color: var(--card-header-bg);
+}
+
+pre {
+    background-color: var(--code-bg);
+}
+
+.form-control, .form-select {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border-color: var(--border-color);
+}
+
+.text-muted {
+    color: var(--muted-text-color) !important;
+}
+
+/* Fix for form field visibility in dark mode */
+.dark-mode .form-control::placeholder,
+.dark-mode .form-select::placeholder {
+    color: rgba(248, 249, 250, 0.7);
+}
+
+.dark-mode .form-control:focus,
+.dark-mode .form-select:focus {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+}
+
+/* Dark mode modal styles */
+.dark-mode .modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.dark-mode .modal-header,
+.dark-mode .modal-footer {
+    border-color: var(--border-color);
+}
+
+.dark-mode .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Footer dark mode adjustments */
+.dark-mode footer.bg-dark {
+    background-color: #0c0c0c !important;
+}
+
+/* Custom styles for the forum */
+.thread-card, .blog-card {
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+.thread-card:hover, .blog-card:hover {
+    transform: translateY(-5px);
+}
+
+.category-badge {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.comment-container {
+    padding-left: 2rem;
+    border-left: 3px solid var(--border-color);
+}
+
+.blog-content img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* User avatar */
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-sm {
+    width: 30px;
+    height: 30px;
+}
+
+.avatar-lg {
+    width: 60px;
+    height: 60px;
+}
+
+/* Custom switch for dark mode toggle */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 30px;
+}
+
+.theme-slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .theme-slider {
+    background-color: #2196F3;
+}
+
+input:checked + .theme-slider:before {
+    transform: translateX(30px);
+}
+
+/* Improve text contrast for dark mode toggle */
+#themeText {
+    color: #f8f9fa;
+    font-weight: 500;
+}
+
+.dark-mode #themeText, 
+.navbar-dark #themeText {
+    color: #f8f9fa !important;
+}
+
+.light-mode #themeText,
+.navbar-light #themeText {
+    color: #212529 !important;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .comment-container {
+        padding-left: 1rem;
+    }
+}
+
+/* Code block styling */
+.code-block {
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #2d3238;
+    padding: 0.5rem 1rem;
+    color: #fff;
+}
+
+.copy-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+/* For prism.js */
+pre[class*="language-"] {
+    margin: 0;
+} 

@@ -1,0 +1,27 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# Custom error pages
+ErrorDocument 404 /projects/2_devTalks/404.php
+ErrorDocument 500 /projects/2_devTalks/500.php
+ErrorDocument 503 /projects/2_devTalks/db-error.php
+
+# Rewrite forum URLs
+RewriteRule ^forums/?$ forum.php [NC,L]
+RewriteRule ^blogs/?$ blogs.php [NC,L]
+RewriteRule ^categories/?$ categories.php [NC,L]
+RewriteRule ^dashboard/?$ dashboard.php [NC,L]
+RewriteRule ^settings/?$ settings.php [NC,L]
+
+# Protect sensitive files
+<FilesMatch "^\.ht">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# PHP settings
+php_flag display_errors Off
+php_value upload_max_filesize 5M
+php_value post_max_size 8M
+php_value max_execution_time 60
+php_value max_input_time 60 
