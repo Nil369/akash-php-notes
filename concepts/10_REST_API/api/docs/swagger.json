@@ -1,0 +1,164 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "User Management API",
+    "description": "A simple REST API built in PHP",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost/akash-php-notes/concepts/10_REST_API/api/"
+    }
+  ],
+  "paths": {
+    "/api-get-all.php": {
+      "get": {
+        "tags": ["API Routes"],
+        "summary": "Get All Users",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fetched all users successfully!"
+          }
+        }
+      }
+    },
+    "/api-get.php": {
+      "get": {
+        "tags": ["API Routes"],
+        "summary": "Get a single user by ID",
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "query",
+            "description": "ID of the user to fetch",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User fetched successfully!"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/api-insert.php": {
+      "post": {
+        "tags": ["API Routes"],
+        "summary": "Create a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" }
+                },
+                "required": ["name", "email"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created successfully"
+          }
+        }
+      }
+    },
+    "/api-update.php": {
+      "put": {
+        "tags": ["API Routes"],
+        "summary": "Update a user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "integer" },
+                  "name": { "type": "string" },
+                  "email": { "type": "string" }
+                },
+                "required": ["id", "name", "email"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated"
+          }
+        }
+      }
+    },
+    "/api-delete.php": {
+      "delete": {
+        "tags": ["API Routes"],
+        "summary": "Delete a user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "integer" }
+                },
+                "required": ["id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User deleted"
+          }
+        }
+      }
+    },
+    "/api-search.php": {
+      "get": {
+        "tags": ["API Routes"],
+        "summary": "Search user by name",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Enter few characters to see all the users with that name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User fetched successfully!"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  }
+}
