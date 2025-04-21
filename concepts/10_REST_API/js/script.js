@@ -9,9 +9,9 @@ async function fetchUsers() {
 
 function renderUsers(data) {
   const tbody = document.getElementById("userTableBody");
-  tbody.innerHTML = data.map(user => `
+  tbody.innerHTML = data.map((user,index) => `
     <tr>
-      <td>${user.id}</td>
+      <td>${index+1}</td>
       <td>${user.name}</td>
       <td>${user.email}</td>
       <td>${user.created_at}</td>
