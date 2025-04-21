@@ -97,6 +97,10 @@ http://localhost/akash-php-notes/concepts/10_REST_API/api/docs/index.php
 
 
 Use this interface to explore and test all the available API endpoints.
+---
+### Screenshots:
+![Swagger_UI](https://github.com/user-attachments/assets/cc8efe18-e1dc-483a-ad52-a425025151ef)
+
 
 ---
 
