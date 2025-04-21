@@ -5,8 +5,8 @@ session_start();
 // Get error message if it exists
 $error_message = isset($_SESSION['db_error']) ? $_SESSION['db_error'] : "An unknown database error occurred.";
 
-// Check if the error is about MySQL not running
-$is_mysql_error = strpos($error_message, "MySQL server is not running") !== false;
+// We're not using local MySQL anymore, so this check is removed
+// $is_mysql_error = strpos($error_message, "MySQL server is not running") !== false;
 ?>
 
 <!DOCTYPE html>
@@ -103,52 +103,28 @@ $is_mysql_error = strpos($error_message, "MySQL server is not running") !== fals
                 </div>
             </div>
             
-            <?php if ($is_mysql_error): ?>
-            <div class="card steps-container">
-                <h4 class="card-title mb-3"><i class="fas fa-tools me-2"></i>How to Fix This</h4>
-                
-                <div class="step">
-                    <h5><i class="fas fa-1 me-2"></i>Start XAMPP Control Panel</h5>
-                    <p>Open XAMPP Control Panel from your Start menu or desktop shortcut.</p>
-                </div>
-                
-                <div class="step">
-                    <h5><i class="fas fa-2 me-2"></i>Start MySQL Service</h5>
-                    <p>Click the "Start" button next to the MySQL module in the XAMPP Control Panel.</p>
-                </div>
-                
-                <div class="step">
-                    <h5><i class="fas fa-3 me-2"></i>Refresh This Page</h5>
-                    <p>Once MySQL is running (you'll see it highlighted in green), click the refresh button below.</p>
-                </div>
-            </div>
-            <?php else: ?>
             <div class="card steps-container">
                 <h4 class="card-title mb-3"><i class="fas fa-tools me-2"></i>Troubleshooting Steps</h4>
                 
                 <div class="step">
-                    <h5>Check Database Credentials</h5>
-                    <p>Verify that your database credentials in db_connect.php are correct.</p>
+                    <h5><i class="fas fa-1 me-2"></i>Check Environment Variables</h5>
+                    <p>Verify that your database credentials in the .env file are correct and properly loaded.</p>
                 </div>
                 
                 <div class="step">
-                    <h5>Check Database Server</h5>
-                    <p>Make sure your MySQL server is running and accessible.</p>
+                    <h5><i class="fas fa-2 me-2"></i>Check Network Connection</h5>
+                    <p>Ensure that your application can connect to the cloud database. Check your internet connection and firewall settings.</p>
                 </div>
                 
                 <div class="step">
-                    <h5>Contact Support</h5>
-                    <p>If the problem persists, please contact your system administrator.</p>
+                    <h5><i class="fas fa-3 me-2"></i>Verify Database Status</h5>
+                    <p>Check if your cloud database instance is running and accessible from your current network.</p>
                 </div>
             </div>
-            <?php endif; ?>
             
             <div class="d-grid gap-2 refresh-btn">
                 <a href="index.php" class="btn btn-primary btn-lg">
                     <i class="fas fa-sync-alt me-2"></i>Try Again
-                </a>
-                <a href="https://www.apachefriends.org/faq_windows.html" target="_blank" class="btn btn-outline-secondary">
-                    <i class="fas fa-question-circle me-2"></i>XAMPP Help
                 </a>
             </div>
         </div>

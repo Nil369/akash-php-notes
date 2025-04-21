@@ -61,10 +61,25 @@ CREATE TABLE password_resets (
 ## Installation
 
 1. Clone or download this repository to your web server directory
-2. Import the `db.sql` file to create the notes table
-3. Import the `auth.sql` file to create the users and password_resets tables
-4. Configure the database connection in `_db/db_connect.php` if needed
+2. Set up your database:
+   - Option 1 (Local): Import the `db.sql` file to create the notes table locally
+   - Option 2 (Cloud): Create the required tables on your cloud database using the SQL in the Database Structure section
+3. Configure database connection:
+   - Copy `sample-env` to `.env`
+   - Edit `.env` with your database credentials (local or cloud)
+4. If using cloud database, no need to start XAMPP/MySQL locally
 5. Access the application through your web server
+
+## Cloud Database Setup
+
+To use a cloud database instead of a local MySQL server:
+
+1. Sign up for a cloud database service (e.g., Amazon RDS, Google Cloud SQL, Aiven, etc.)
+2. Create a MySQL database instance
+3. Configure firewall rules to allow your application to connect
+4. Get your connection credentials (host, username, password, database name)
+5. Update your `.env` file with these credentials
+6. The application will now connect directly to your cloud database
 
 ## Usage
 

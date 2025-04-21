@@ -1,52 +1,97 @@
 <?php
+// Start session for authentication
+session_start();
+
+// Load environment variables
+require_once "./_db/env.php";
+loadEnv();
+
+// Check if we're using Aiven cloud database
+$servername = getenv("DB_HOST");
+$using_pdo = false;
+
+if (strpos($servername, 'aivencloud.com') !== false) {
+    // Use dedicated Aiven connection
+    require_once "./_db/aiven_connect.php";
+} else {
+    // Regular mysqli connection for other databases
+    require_once "./_db/db_connect.php";
+}
+
+// Check if user is authenticated
+$is_logged_in = isset($_SESSION['user_id']);
+$user_id = $is_logged_in ? $_SESSION['user_id'] : null;
+$username = $is_logged_in ? $_SESSION['username'] : null;
+
 // Include authentication functions
 require_once "auth/auth_functions.php";
 
-// Check if user is logged in
-$user_id = check_login();
-
-require_once "_db/db_connect.php";
+// Function to execute queries based on connection type
+function execute_query($sql, $params, $conn, $using_pdo) {
+    if ($using_pdo) {
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($params);
+        return $stmt;
+    } else {
+        $stmt = mysqli_prepare($conn, $sql);
+        if (count($params) > 0) {
+            $types = str_repeat('i', count($params)); // Assuming all params are integers
+            mysqli_stmt_bind_param($stmt, $types, ...$params);
+        }
+        mysqli_stmt_execute($stmt);
+        return $stmt;
+    }
+}
 
 // Delete note if delete button is clicked
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
     $sql = "DELETE FROM notes WHERE id = ? AND user_id = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ii", $id, $user_id);
     
-    if (mysqli_stmt_execute($stmt)) {
-        header("Location: index.php");
+    if ($using_pdo) {
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id, $user_id]);
     } else {
-        echo "Error deleting record: " . mysqli_error($conn);
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ii", $id, $user_id);
+        mysqli_stmt_execute($stmt);
     }
+    
+    header("Location: index.php");
 }
 
 // Toggle pin status
 if (isset($_GET['pin'])) {
     $id = $_GET['pin'];
     $sql = "UPDATE notes SET is_pinned = NOT is_pinned WHERE id = ? AND user_id = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ii", $id, $user_id);
     
-    if (mysqli_stmt_execute($stmt)) {
-        header("Location: index.php");
+    if ($using_pdo) {
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id, $user_id]);
     } else {
-        echo "Error updating record: " . mysqli_error($conn);
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ii", $id, $user_id);
+        mysqli_stmt_execute($stmt);
     }
+    
+    header("Location: index.php");
 }
 
 // Toggle archive status
 if (isset($_GET['archive'])) {
     $id = $_GET['archive'];
     $sql = "UPDATE notes SET is_archived = NOT is_archived WHERE id = ? AND user_id = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "ii", $id, $user_id);
     
-    if (mysqli_stmt_execute($stmt)) {
-        header("Location: index.php");
+    if ($using_pdo) {
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id, $user_id]);
     } else {
-        echo "Error updating record: " . mysqli_error($conn);
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ii", $id, $user_id);
+        mysqli_stmt_execute($stmt);
     }
+    
+    header("Location: index.php");
 }
 
 ?>

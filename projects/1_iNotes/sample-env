@@ -1,0 +1,12 @@
+# Database Configuration for Cloud Database
+# Rename this file to .env and replace with your actual cloud database credentials
+
+DB_HOST=your-cloud-db-host.example.com
+DB_USER=your_username
+DB_PASS=your_password
+DB_NAME=your_database_name
+DB_PORT=3306
+DB_SSL=false
+
+# Set DB_SSL to "true" if your cloud database requires SSL connection
+# DB_PORT defaults to 3306 if not specified

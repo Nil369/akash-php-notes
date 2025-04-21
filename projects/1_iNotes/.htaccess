@@ -8,7 +8,7 @@ RewriteBase /akash-php-notes/projects/1_iNotes/
 ErrorDocument 404 /akash-php-notes/projects/1_iNotes/404.php
 
 # Secure sensitive files
-<FilesMatch "^\.ht|^_db/|auth\.sql|db\.sql|reset_table\.sql">
+<FilesMatch "^\.ht|^_db/|auth\.sql|db\.sql|reset_table\.sql|\.env|sample-env">
     Order Allow,Deny
     Deny from all
 </FilesMatch>
@@ -18,6 +18,22 @@ ErrorDocument 404 /akash-php-notes/projects/1_iNotes/404.php
     Order Allow,Deny
     Deny from all
 </Files>
+
+# Specifically protect .env file
+<Files ~ "\.env$">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Add security headers
+<IfModule mod_headers.c>
+    # Prevent browsers from detecting MIME type
+    Header set X-Content-Type-Options "nosniff"
+    # Prevent clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+    # XSS protection
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
 
 # Fix db_connect.php issue - ensure correct path
 <IfModule mod_rewrite.c>

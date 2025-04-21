@@ -13,49 +13,28 @@ $servername = getenv("DB_HOST");
 $username   = getenv("DB_USER");
 $password   = getenv("DB_PASS");
 $dbname     = getenv("DB_NAME");
-$port       = getenv("DB_PORT") ? getenv("DB_PORT") : 3306; // Default to 3306 if not specified
-$use_ssl    = getenv("DB_SSL") === "true" ? true : false; // Check if SSL is required
+$port       = getenv("DB_PORT") ? getenv("DB_PORT") : 3306;
 
 // Create database connection with error handling
 try {
-    if (strpos($servername, 'aivencloud.com') !== false) {
-        // Special handling for Aiven cloud databases
-        $conn = mysqli_init();
-        
-        // Force SSL for Aiven
-        mysqli_options($conn, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, false);
-        mysqli_options($conn, MYSQLI_CLIENT_SSL, 1);
-        mysqli_real_connect(
-            $conn, 
-            $servername, 
-            $username, 
-            $password, 
-            $dbname, 
-            $port,
-            NULL,
-            MYSQLI_CLIENT_SSL
-        );
-    } else {
-        // Generic cloud database connection
-        $conn = mysqli_init();
-        
-        // Configure SSL if needed
-        if ($use_ssl) {
-            mysqli_ssl_set($conn, NULL, NULL, NULL, NULL, NULL);
-            mysqli_options($conn, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, false);
-            
-            // Connect with SSL
-            mysqli_real_connect($conn, $servername, $username, $password, $dbname, $port, MYSQLI_CLIENT_SSL);
-        } else {
-            // Connect without SSL
-            mysqli_real_connect($conn, $servername, $username, $password, $dbname, $port);
-        }
-    }
+    // Create DSN for mysqli connect
+    $mysqli_options = [
+        MYSQLI_OPT_SSL_VERIFY_SERVER_CERT => true,
+        MYSQLI_CLIENT_SSL => true
+    ];
     
-    if (!$conn) {
+    // Create connection
+    $conn = mysqli_init();
+    
+    // Configure SSL options
+    mysqli_ssl_set($conn, NULL, NULL, NULL, NULL, NULL);
+    mysqli_options($conn, MYSQLI_OPT_CONNECT_TIMEOUT, 10);
+    
+    // Connect using hostname and port as separate parameters
+    if (!mysqli_real_connect($conn, $servername, $username, $password, $dbname, (int)$port, NULL, MYSQLI_CLIENT_SSL)) {
         throw new Exception("Database connection failed: " . mysqli_connect_error());
     }
-
+    
     // Check if table exists
     $check_table = mysqli_query($conn, "SHOW TABLES LIKE 'notes'");
 
@@ -100,4 +79,4 @@ try {
     header("Location: db_error.php");
     exit();
 }
-?>
+?> 
